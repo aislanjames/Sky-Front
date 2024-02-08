@@ -18,9 +18,10 @@ jobs:
         npm install
         npm run build  # ou o comando que você usa para gerar o build no ./dist
 
-    - name: Deploy to GitHub Pages
+    - name: Deploy
       uses: JamesIves/github-pages-deploy-action@4.1.4
       with:
-        branch: gh-pages  # A branch para onde os arquivos serão enviados
-        folder: dist      # O diretório que você deseja publicar no GitHub Pages
-        token: ${{ secrets.GITHUB_TOKEN }}  # Token do GitHub para autorização
+        branch: gh-pages
+        folder: dist
+        token: ${{ secrets.GITHUB_TOKEN }}
+      
