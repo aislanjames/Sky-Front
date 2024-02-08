@@ -1,27 +1,31 @@
-name: Deploy to GitHub Pages
+name: Build and Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main  # Substitua por sua branch de produção, se for diferente
+      - main  # Define a branch que acionará o workflow
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      
+    - uses: actions/checkout@v2  # Checa o código fonte do repositório
+
+    - name: Setup Node
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'  # Atualizado para usar a versão 20 do Node.js
+
+    - name: Install Dependencies
+      run: npm install  # Instala as dependências do projeto, incluindo Gulp
+
     - name: Build
-      run: |
-        npm install
-        npm run build  # ou o comando que você usa para gerar o build no ./dist
+      run: npm run build  # Executa o script de build do Gulp
 
     - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@4.1.4
+      uses: JamesIves/github-pages-deploy-action@4.1.4  # Usa a ação de deploy para GitHub Pages
       with:
-        branch: gh-pages
-        folder: dist
-        token: ${{ secrets.GITHUB_TOKEN }}
-      
+        branch: gh-pages  # Branch de destino para o deploy
+        folder: dist  # Diretório de origem do build para deploy
+        token: ${{ secrets.GITHUB_TOKEN }}  # Utiliza o GITHUB_TOKEN ou PAT para autenticação
