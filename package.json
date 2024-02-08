@@ -1,0 +1,35 @@
+{
+  "name": "Sky-Front",
+  "version": "1.0.0",
+  "description": "Projeto desenvolvido durante processo seletivo da empresa Sky.",
+  "main": "index.js",
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.2",
+    "gulp": "^4.0.2",
+    "jquery": "^3.7.1",
+    "swiper": "^11.0.6"
+  },
+  "devDependencies": {
+    "browser-sync": "^3.0.2",
+    "gulp-sass": "^5.1.0",
+    "sass": "^1.70.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "gulp build",
+    "start": "gulp watch",
+    "serve": "gulp serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aislanjames/Sky-Front.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aislanjames/Sky-Front/issues"
+  },
+  "homepage": "https://github.com/aislanjames/Sky-Front#readme"
+}

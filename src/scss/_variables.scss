@@ -1,0 +1,13 @@
+$red: #f35c58;
+$bg-header: #f1f2fa;
+$links: rgba(0, 0, 0, 0.6);
+
+$small: 640px;
+$medium: 1024px;
+$large: 1440px;
+
+@mixin media($min-width) {
+    @media (min-width: $min-width) {
+        @content;
+    }
+}
