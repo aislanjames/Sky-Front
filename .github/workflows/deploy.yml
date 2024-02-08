@@ -1,0 +1,30 @@
+name: Build and Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Define a branch que acionará o workflow
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2  # Checa o código fonte do repositório
+
+    - name: Setup Node
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'  # Versão do Node.js que seu projeto pode utilizar
+
+    - name: Install Dependencies
+      run: npm install  # Instala as dependências do projeto, incluindo Gulp
+
+    - name: Build
+      run: npm run build  # Executa o script de build do Gulp
+
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@4.1.4  # Usa a ação de deploy para GitHub Pages
+      with:
+        branch: gh-pages  # Branch de destino para o deploy
+        folder: dist  # Diretório de origem do build para deploy
