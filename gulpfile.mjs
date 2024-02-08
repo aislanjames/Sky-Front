@@ -4,8 +4,9 @@ import gulpSass from 'gulp-sass';
 import cleanCSS from 'gulp-clean-css';
 import browserSyncPackage from 'browser-sync';
 import imagemin from 'gulp-imagemin';
-import mozjpeg from 'imagemin-mozjpeg'; // Importa o plugin imagemin-mozjpeg
-import optipng from 'imagemin-optipng'; // Importa o plugin imagemin-optipng
+import mozjpeg from 'imagemin-mozjpeg';
+import optipng from 'imagemin-optipng';
+import replace from 'gulp-replace';
 
 const sassCompiler = gulpSass(sass);
 const browserSync = browserSyncPackage.create();
@@ -14,6 +15,7 @@ const browserSync = browserSyncPackage.create();
 function buildStyles() {
   return gulp.src('src/scss/**/*.scss')
     .pipe(sassCompiler().on('error', sassCompiler.logError))
+    .pipe(replace('../fonts/', 'fonts/')) // Ajuste os caminhos conforme necessário
     .pipe(cleanCSS({ compatibility: 'ie8' }))
     .pipe(gulp.dest('dist/css'))
     .pipe(browserSync.stream());
@@ -43,6 +45,12 @@ function copyJs() {
     .pipe(browserSync.stream());
 }
 
+function copyFonts() {
+  return gulp.src('node_modules/bootstrap-icons/font/fonts/*')
+    .pipe(gulp.dest('dist/fonts'));
+}
+
+
 // Servir e observar mudanças
 function serve() {
   browserSync.init({
@@ -57,5 +65,5 @@ function serve() {
 }
 
 // Definir tarefas
-gulp.task('build', gulp.parallel(buildStyles, copyHtml, copyImages, copyJs));
+gulp.task('build', gulp.parallel(buildStyles, copyHtml, copyImages, copyJs, copyFonts));
 gulp.task('watch', gulp.series('build', serve));
