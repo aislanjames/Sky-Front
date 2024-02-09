@@ -9,7 +9,7 @@ jQuery.noConflict();
 
             movies.forEach(movie => {
                 const slideClass = isPopular ? 'slide-popular' : 'slide-genre';
-                slides += `<div class="${slideClass}"><img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" style="height: ${isPopular ? '480px' : '300px'};"></div>`;
+                slides += `<div class="${slideClass}"><img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}";"></div>`;
             });
 
             carousel.html('<div class="slider responsive">' + slides + '</div>');
@@ -37,7 +37,7 @@ jQuery.noConflict();
                 focusOnSelect: true,
                 responsive: [
                     { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 1 } },
-                    { breakpoint: 600, settings: { slidesToShow: 2, slidesToScroll: 1 } },
+                    { breakpoint: 600, settings: { slidesToShow: 1, slidesToScroll: 1 } },
                     { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1 } }
                 ]
             });
@@ -47,7 +47,7 @@ jQuery.noConflict();
         function initializeGenreMoviesCarousel(selector) {
             $(selector).slick({
                 dots: true,
-                infinite: true,
+                infinite: false,
                 speed: 300,
                 slidesToShow: 5, // Valor conforme especificação
                 slidesToScroll: 5,

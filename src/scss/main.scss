@@ -1,137 +1,185 @@
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "variables";
 
+header {
+    box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.15);
+    position: relative;
 
-nav.navbar,
-footer {
-    background-color: $bg-header;
-}
+    nav.navbar,
+    footer {
+        background-color: $bg-header;
+    }
 
-div.navbar-nav {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    div {
-        display: flex;
+    div.navbar-nav {
         width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
-        @include media($medium) {
-            &#account {
-                justify-content: end;
+        div {
+            display: flex;
+            width: 100%;
+
+            @include media($medium) {
+                &#account {
+                    justify-content: end;
+                }
+
             }
 
-        }
+            &#accessibility {
 
-        &#accessibility {
+                a.nav-link {
 
-            a.nav-link {
-                i, span {
-                    padding: 5px;
-                    background: #fff;
-                    border-radius: 50px;
+                    i,
+                    span {
+                        padding: 5px;
+                        background: #fff;
+                        border-radius: 50px;
+                    }
                 }
             }
         }
     }
-}
-
-a.nav-link {
-    font-size: 16px;
-    font-weight: bold;
-    color: $links;
-
-    &:hover {
-        color: $red;
-    }
-}
-
-ul.nav {
 
     a.nav-link {
-        font-stretch: normal;
-        font-style: normal;
-        line-height: 1.38;
-        letter-spacing: normal;
-        text-align: center;
-        border-bottom: solid 4px transparent;
+        font-size: 16px;
+        font-weight: bold;
+        color: $links;
 
         &:hover {
-            border-bottom: solid 4px $red ;
+            color: $red;
+        }
+    }
+
+    ul.nav {
+
+        a.nav-link {
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 1.38;
+            letter-spacing: normal;
+            text-align: center;
+            border-bottom: solid 4px transparent;
+            border-radius: 0;
+
+            &:hover {
+                border-bottom: solid 4px $red ;
+            }
         }
     }
 }
 
 main {
     padding: 50px 0;
-}
+    background-color: $bg-main;
 
-.slick {
-
-    @include media($large) {
+    .slick {
 
         &-track {
-            align-items: center;
+            gap: 8px;
+            display: flex;
         }
-    
-        &-track, &-active, &-center{
-            height: 500px;
-        }
-    
-        &-center{
+
+        &-slide {
+
             img {
-                height: 100% !important;
+                border-radius: 10px;
             }
         }
+
+        @include media($large) {
+
+            &-track {
+                align-items: center;
+            }
+
+            &-track,
+            &-active,
+            &-center {
+                height: 500px;
+            }
+
+            &-center {
+                img {
+                    height: 100% !important;
+                }
+            }
+        }
+
     }
-    
-}
 
+    button {
 
+        &.slick {
 
+            &-arrow {
+                width: 40px;
+                height: 40px;
+                z-index: 10;
 
-button {
-
-    &.slick {
-
-        &-arrow {
-            width: 40px;
-            height: 40px;
-
-            &::before {
-                font-size: 42px;
-                color: $arrow;
+                &::before {
+                    font-size: 42px;
+                    color: $bg-main;
+                    z-index: 10;
+                    position: relative;
+                }
             }
-        }
-
-        &-prev {
-            left: 2px;
-        }
-
-        &-next {
-            right: 2px;
-        }
-    }
-}
-
-#genres-movie {
-
-    @include media($large) {
-        
-        .slick {
-
-            &-list {
-                max-height: 310px;
-            }
-        }
-
-        button.slick {
 
             &-prev {
-                left: -50px;
+                left: 2px;
+            }
+
+            &-next {
+                right: 2px;
             }
         }
+    }
+
+    #carousel-popularmovie {
+
+        .slide-popular {
+            max-height: 460px;
+            display: flex;
+            justify-content: center;
+
+            img {
+                width: auto;
+                max-height: 460px;
+            }
+        }
+    }
+
+    #genres-movie {
+
+        .slide {
+
+            &-genre {
+                max-width: fit-content !important;
+            }
+        }
+
+        img {
+            max-height: 280px;
+        }
+
+        @include media($large) {
+
+            .slick {
+
+                &-list {
+                    max-height: 310px;
+                }
+            }
+
+            button.slick {
+
+                &-prev {
+                    left: -50px;
+                }
+            }
+        }
+
     }
 
 }
