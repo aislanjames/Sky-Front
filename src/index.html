@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teste Front-end - SKY</title>
     <link rel="shortcut icon" href="./assets/img/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+
     <link rel="stylesheet" href="css/main.css">
 </head>
 
@@ -17,8 +22,9 @@
                 <a class="navbar-brand" href="#">
                     <img src="./assets/img/logotipo-red.svg" alt="logotipo SKY">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -37,12 +43,12 @@
                                 <a class="nav-link" href="#"><span id="A+">A+</span></a>
                             </span>
                         </div>
-                        <div id="play"  class="item-submenu">
+                        <div id="play" class="item-submenu">
                             <span class="nav-item">
                                 <a class="nav-link" href="#"><i class="bi bi-play"></i>Play</a>
                             </span>
                         </div>
-                        <div id="account"  class="item-submenu">
+                        <div id="account" class="item-submenu">
                             <span class="nav-item">
                                 <a class="nav-link" href="#"><i class="bi bi-person"></i>Entrar</a>
                             </span>
@@ -51,7 +57,7 @@
                             </span>
                         </div>
                     </div>
-        
+
                 </div>
             </div>
         </nav>
@@ -70,11 +76,18 @@
     </header>
 
     <main>
-        <section id="carousel-popularmovie" class=""></section>
-        <section id="carousel-categorymovie" class="horror"></section>
-        <section id="carousel-categorymovie" class="science"></section>
-        <section id="carousel-categorymovie" class="action"></section>
-        <section id="carousel-categorymovie" class="comedy"></section>
+
+        <section id="carousel-popularmovie" class="blue carousel">
+            <div class="content">
+                <div class="slider responsive"></div> <!-- Container vazio para o carrossel popular -->
+            </div>
+        </section>
+
+        <section id="carousel-horror" class="carousel-categorymovie horror"></section>
+        <section id="carousel-science" class="carousel-categorymovie science"></section>
+        <section id="carousel-action" class="carousel-categorymovie action"></section>
+        <section id="carousel-comedy" class="carousel-categorymovie comedy"></section>
+
     </main>
 
     <footer id="footerComponent">
@@ -87,7 +100,14 @@
         </div>
     </footer>
 
-    <script src="js/bundle.js" type="module"></script>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="js/carousel.js" type="text/javascript"></script>
+
+
+    <script src="js/bundle.js" type="text/javascript"></script>
 </body>
 
 </html>
