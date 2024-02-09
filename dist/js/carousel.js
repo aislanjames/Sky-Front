@@ -2,38 +2,66 @@ jQuery.noConflict();
 (function ($) {
     $(document).ready(function () {
         // Função para criar carrosséis de filmes
-        function createMovieCarousel(selector, movies) {
+        function createMovieCarousel(selector, movies, isPopular = false) {
             const carousel = $(selector);
-            carousel.empty(); // Limpa o conteúdo anterior
+            carousel.empty();
             let slides = '';
 
             movies.forEach(movie => {
-                slides += `<div><img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}"></div>`;
+                const slideClass = isPopular ? 'slide-popular' : 'slide-genre';
+                slides += `<div class="${slideClass}"><img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" style="height: ${isPopular ? '480px' : '300px'};"></div>`;
             });
 
             carousel.html('<div class="slider responsive">' + slides + '</div>');
-            initializeSlick(selector + ' .slider');
+
+            // Inicializa o Slick Slider após a criação do carrossel
+            if (isPopular) {
+                initializePopularMoviesCarousel(selector + ' .slider');
+            } else {
+                initializeGenreMoviesCarousel(selector + ' .slider');
+            }
         }
 
-        // Função para inicializar o Slick Slider
-        function initializeSlick(selector) {
+        // Função para inicializar o Slick Slider para filmes populares
+        function initializePopularMoviesCarousel(selector) {
             $(selector).slick({
                 dots: true,
+                autoplay: true,
+                autoplaySpeed: 4000,
                 infinite: true,
                 speed: 300,
-                slidesToShow: 3,
-                slidesToScroll: 3,
+                slidesToShow: 3, // Atualizado para manter consistência com o requisito
+                slidesToScroll: 1,
                 arrows: true,
+                centerMode: true,
+                focusOnSelect: true,
                 responsive: [
-                    { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3, infinite: true, dots: true } },
-                    { breakpoint: 600, settings: { slidesToShow: 2, slidesToScroll: 2 } },
+                    { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 1 } },
+                    { breakpoint: 600, settings: { slidesToShow: 2, slidesToScroll: 1 } },
                     { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1 } }
                 ]
             });
         }
 
-        // Função para buscar filmes da API
-        function fetchMovies(selector, genreId = '') {
+        // Função para inicializar o Slick Slider para filmes por gênero
+        function initializeGenreMoviesCarousel(selector) {
+            $(selector).slick({
+                dots: true,
+                infinite: true,
+                speed: 300,
+                slidesToShow: 5, // Valor conforme especificação
+                slidesToScroll: 5,
+                arrows: true,
+                responsive: [
+                    { breakpoint: 1024, settings: { slidesToShow: 5, slidesToScroll: 5 } },
+                    { breakpoint: 600, settings: { slidesToShow: 3, slidesToScroll: 3 } },
+                    { breakpoint: 480, settings: { slidesToShow: 2, slidesToScroll: 2 } }
+                ]
+            });
+        }
+
+        // Função para buscar filmes da API de forma assíncrona
+        async function fetchMoviesAsync(selector, genreId = '') {
             const options = {
                 method: 'GET',
                 headers: {
@@ -42,21 +70,25 @@ jQuery.noConflict();
                 }
             };
 
-            let url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=pt-BR&page=1&sort_by=popularity.desc';
+            const limit = genreId === '' ? 5 : 15;
+            let url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=pt-BR&page=1&sort_by=popularity.desc`;
             if (genreId) url += `&with_genres=${genreId}`;
 
-            fetch(url, options)
-                .then(response => response.json())
-                .then(data => createMovieCarousel(selector, data.results.slice(0, 15))) // Assume 15 filmes por carrossel
-                .catch(err => console.error(err));
+            try {
+                const response = await fetch(url, options);
+                const data = await response.json();
+                createMovieCarousel(selector, data.results.slice(0, limit), genreId === '');
+            } catch (err) {
+                console.error(err);
+            }
         }
 
-        // Busca e cria os carrosséis
-        fetchMovies('#carousel-popularmovie'); // Filmes populares
-        fetchMovies('#carousel-horror', '27'); // Terror
-        fetchMovies('#carousel-science', '878'); // Ficção científica
-        fetchMovies('#carousel-action', '28'); // Ação
-        fetchMovies('#carousel-comedy', '35'); // Comédia
+        // Carrega o primeiro carrossel de forma assíncrona e espera sua conclusão antes de carregar os demais
+        fetchMoviesAsync('#carousel-popularmovie').then(() => {
+            fetchMoviesAsync('#carousel-categorymovie.horror', '27');
+            fetchMoviesAsync('#carousel-categorymovie.action', '28');
+            fetchMoviesAsync('#carousel-categorymovie.comedy', '35');
+            fetchMoviesAsync('#carousel-categorymovie.science', '878');
+        });
     });
 })(jQuery);
-

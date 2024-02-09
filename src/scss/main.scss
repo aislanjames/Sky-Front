@@ -1,9 +1,9 @@
 @import "node_modules/bootstrap/scss/bootstrap";
-@import "node_modules/bootstrap-icons/font/bootstrap-icons";
 @import "variables";
-@import "carousel";
 
-nav.navbar, footer {
+
+nav.navbar,
+footer {
     background-color: $bg-header;
 }
 
@@ -23,6 +23,17 @@ div.navbar-nav {
             }
 
         }
+
+        &#accessibility {
+
+            a.nav-link {
+                i, span {
+                    padding: 5px;
+                    background: #fff;
+                    border-radius: 50px;
+                }
+            }
+        }
     }
 }
 
@@ -30,6 +41,10 @@ a.nav-link {
     font-size: 16px;
     font-weight: bold;
     color: $links;
+
+    &:hover {
+        color: $red;
+    }
 }
 
 ul.nav {
@@ -40,10 +55,9 @@ ul.nav {
         line-height: 1.38;
         letter-spacing: normal;
         text-align: center;
-        border-bottom: solid 4px transparent ;
+        border-bottom: solid 4px transparent;
 
         &:hover {
-            color: $red;
             border-bottom: solid 4px $red ;
         }
     }
@@ -51,4 +65,73 @@ ul.nav {
 
 main {
     padding: 50px 0;
+}
+
+.slick {
+
+    @include media($large) {
+
+        &-track {
+            align-items: center;
+        }
+    
+        &-track, &-active, &-center{
+            height: 500px;
+        }
+    
+        &-center{
+            img {
+                height: 100% !important;
+            }
+        }
+    }
+    
+}
+
+
+
+
+button {
+
+    &.slick {
+
+        &-arrow {
+            width: 40px;
+            height: 40px;
+
+            &::before {
+                font-size: 42px;
+                color: $arrow;
+            }
+        }
+
+        &-prev {
+            left: 2px;
+        }
+
+        &-next {
+            right: 2px;
+        }
+    }
+}
+
+#genres-movie {
+
+    @include media($large) {
+        
+        .slick {
+
+            &-list {
+                max-height: 310px;
+            }
+        }
+
+        button.slick {
+
+            &-prev {
+                left: -50px;
+            }
+        }
+    }
+
 }
